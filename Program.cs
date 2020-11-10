@@ -15,7 +15,7 @@ namespace CodingTestForGT2Junior
             bool isExit = false;
             IDownloader downloader = null;
             string resultMsg;
-
+            
             PrintHelp();
 
             while (!isExit)

@@ -12,7 +12,7 @@ namespace CodingTestForGT2Junior
     {
         public bool DoDownload(out string resultMsg)
         {
-            string url, downlaodLocalFolderPath;
+            string url, downloadLocalFolderPath;
 
             Console.WriteLine();
             Console.WriteLine("<HTTP Data Downloader>");
@@ -20,12 +20,12 @@ namespace CodingTestForGT2Junior
             url = Console.ReadLine();
             Console.WriteLine();
             Console.Write("Input target file path: ");
-            downlaodLocalFolderPath = Console.ReadLine();
+            downloadLocalFolderPath = Console.ReadLine();
             Console.WriteLine();
 
-            if (File.Exists(downlaodLocalFolderPath)) File.Delete(downlaodLocalFolderPath);
+            if (File.Exists(downloadLocalFolderPath)) File.Delete(downloadLocalFolderPath);
 
-            if(!Directory.CreateDirectory(Path.GetDirectoryName(downlaodLocalFolderPath)).Exists)
+            if (!Directory.CreateDirectory(Path.GetDirectoryName(downloadLocalFolderPath)).Exists)
             {
                 resultMsg = "Please, check the target file path.";
                 return false;
@@ -34,12 +34,12 @@ namespace CodingTestForGT2Junior
             //http://www.celestrak.com/NORAD/elements/tle-new.txt
             using (var client = new WebClient())
             {
-                client.DownloadFile(url, downlaodLocalFolderPath);
+                client.DownloadFile(url, downloadLocalFolderPath);
             }
 
-            if (File.Exists(downlaodLocalFolderPath))
+            if (File.Exists(downloadLocalFolderPath))
             {
-                resultMsg = "Succeeded to download data from URL.";
+                resultMsg = Path.GetFileName(downloadLocalFolderPath) + " is downloaded at " + Path.GetDirectoryName(downloadLocalFolderPath) + "\nSucceeded to download data from URL.\n";
                 return true;
             }
             else
