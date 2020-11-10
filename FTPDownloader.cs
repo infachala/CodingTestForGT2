@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Net;
+using System.Xml;
 
 namespace CodingTestForGT2Junior
 {
@@ -142,24 +143,31 @@ namespace CodingTestForGT2Junior
 
         bool IDownloader.DoDownload(out string resultMsg)
         {
-            string ftpPath, id, pwd, localPath;
+            string ftpPath = "", id = "", pwd = "", localPath = "";
+            string xmlPath = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName + "\\login.xml";
 
-            Console.WriteLine();
-            Console.WriteLine("<FTP Data Downloader>");
-            Console.Write("Input FTP ADDRESS to download data: ");
-            ftpPath = Console.ReadLine();
-            Console.WriteLine();
-            Console.Write("Input ID: "); //anonymous
-            id = Console.ReadLine();
-            Console.WriteLine();
-            Console.Write("Input PASSWORD: "); //""
-            pwd = Console.ReadLine();
-            Console.WriteLine();
-            Console.Write("Input target file path: ");
-            localPath = Console.ReadLine();
-            Console.WriteLine();            
+            XmlDocument xml = new XmlDocument();
 
-            if(Directory.Exists(localPath)==false)
+            Console.Write("\nLoading Configuation from ");
+            Console.WriteLine(xmlPath + " ...\n");
+
+            xml.Load(xmlPath);
+            XmlNodeList nodes = xml.SelectNodes("/main");
+
+            foreach (XmlNode node in nodes)
+            {
+                ftpPath = node["ftpPath"].InnerText;
+                id = node["id"].InnerText;
+                pwd = node["pwd"].InnerText;
+                localPath = node["localPath"].InnerText;
+            }
+
+            Console.WriteLine("FTP Path is " + ftpPath);
+            Console.WriteLine("ID is " + id);
+            Console.WriteLine("PASSWORD is " + pwd);
+            Console.WriteLine("Local Path is " + localPath + "\n");
+
+            if (Directory.Exists(localPath) == false)
             {
                 Directory.CreateDirectory(localPath);
             }
@@ -173,7 +181,7 @@ namespace CodingTestForGT2Junior
             {
                 resultMsg = "\nFailed to download data form URL.\n";
                 return false;
-            }            
+            }              
         }
     }
 }
