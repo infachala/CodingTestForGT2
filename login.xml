@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<main>
+	<ftpPath>ftp://ftp.iers.org/products/eop/bulletinb/format_2009/</ftpPath>
+	<id>anonymous</id>
+	<pwd></pwd>
+	<localPath>C:\test\</localPath>
+</main>
